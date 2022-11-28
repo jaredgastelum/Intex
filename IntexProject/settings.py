@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 from getpass import getpass
 
 
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'IntexProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,14 +79,13 @@ WSGI_APPLICATION = 'IntexProject.wsgi.application'
 
 DATABASES = {
     'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': 'kidney',
-    'USER': 'postgres',
-    'PASSWORD': getpass(),
-    'HOST': 'localhost'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'kidney',
+        'USER': 'postgres',
+        'PASSWORD': getpass(),
+        'HOST': 'localhost'
     }
-} 
-
+}
 
 
 # Password validation
