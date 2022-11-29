@@ -1,0 +1,48 @@
+{% extends 'base.html' %} 
+{% load static %} {% block basetitle %} Profile 
+{% endblock %} {% block content %}
+<div class="row mt-3 pt-3">
+  <div class="col-md-4">
+    <h1>Enter Personal Info:</h1> <br> <br>
+    <!-- form will go here later-->
+  </div>
+  <div class="col-md-8">
+    <form name="newProfile" method="POST" action="{% url 'storeProfile' %}">
+      {% csrf_token %}
+
+      <label for="k">K:</label>
+      <input type="text" name="k" id="k" autofocus> <br>
+
+      <label for="phos">Phos:</label>
+      <input type="text" name="phos" id="phos"> <br>
+
+      <label for="na">Na:</label>
+      <input type="text" name="na" id="na"> <br>
+
+      <label for="creatinine">Ceatinine:</label>
+      <input type="text" name="creatinine" id="creatinine"> <br>
+
+      <label for="albumin">Albumin:</label>
+      <input type="text" name="albumin" id="albumin"> <br>
+
+      <label for="blood">Blood Pressure:</label>
+      <input type="text" name="blood" id="blood"> <br>
+
+      <label for="sugar">Blood Sugar:</label>
+      <input type="text" name="sugar" id="sugar"> <br>
+
+      <label for="weight">Weight:</label>
+      <input type="number" name="weight" id="weight"> <br>
+
+      <label for="date">Date:</label>
+      <input type="datetime-local" name="date" id="date"> <br>
+      
+
+
+      <button type="submit">Create new Person</button>v
+
+    </form>
+    <!--chart will go here later-->
+  </div>
+</div>
+{% endblock %}

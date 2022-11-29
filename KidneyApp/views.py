@@ -4,6 +4,7 @@ import urllib.parse
 import requests
 from .models import Person
 from .models import Patient
+from .models import LabVitals
 
 # Create your views here.
 
@@ -40,16 +41,33 @@ def storeProfilePageView(request):
 
         new_patient = Patient()
 
-        new_patient.age = request.POST.get('age')
-        new_patient.weight = request.POST.get('weight')
-        new_patient.height = request.POST.get('height')
+        new_patient.age = request.POST.get(int('age'))
+        new_patient.weight = request.POST.get(int('weight'))
+        new_patient.height = request.POST.get(int('height'))
 
         new_patient.save()
 
     return render('kidneyApp/made.html')
 
+def storeVitalsPageView(request):
+    if request.method == 'POST':
 
-        
+        new_vitals = LabVitals()
+
+        new_vitals.K = request.POST.get('k')
+        new_vitals.Phos = request.POST.get('phos')
+        new_vitals.Na = request.POST.get('na')
+        new_vitals.creatinine = request.POST.get('creatinine')
+        new_vitals.Albumin = request.POST.get('albumin')
+        new_vitals.BloodPressure = request.POST.get('blood')
+        new_vitals.BloodSugar = request.POST.get('sugar')
+        new_vitals.Date = request.POST.get('date')
+        new_vitals.Weight = request.POST.get(int('weight'))
+
+        new_vitals.save()
+
+    return render('kidneyApp/dashboard.html', print("Lab Vitals are now Updated"))
+       
 
 
 
