@@ -34,7 +34,7 @@ class Patient(models.Model):
 class Morbidity(models.Model):
     morbidityID = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=50)
-    datediagnosed = models.DateTimeField(default=datetime.today, datetime=True)
+    datediagnosed = models.DateTimeField(default=datetime.today, blank=True)
 
     def __str__(self):
         return (self.name)
@@ -61,7 +61,7 @@ class LabVitals(models.Model):
     BloodSugar = models.IntegerField(default=0)
     BloodPressure = models.CharField(max_length=10)
     Weight = models.DecimalField(max_digits=3, decimal_places=2)
-    Date = models.DateTimeField(default=datetime.today, datetime=True)
+    Date = models.DateTimeField(default=datetime.today, blank=True)
 
     def __str__(self):
         return (self.vitalid)
@@ -87,7 +87,7 @@ class Food(models.Model):
 
 class FoodEntry(models.Model):
     foodEntryID = models.IntegerField(primary_key=True)
-    date = models.DateTimeField(default=datetime.today, datetime=True)
+    date = models.DateTimeField(default=datetime.today, blank=True)
     mealType = models.CharField(max_length=20)
     patientID = models.ForeignKey(
         Patient, null=True, blank=True, on_delete=models.SET_NULL)
@@ -114,7 +114,7 @@ class JournalEntry(models.Model):
     entryID = models.IntegerField(primary_key=True)
     patientID = models.ForeignKey(
         Patient, null=True, blank=True, on_delete=models.SET_NULL)
-    date = models.DateTimeField(default=datetime.today, datetime=True)
+    date = models.DateTimeField(default=datetime.today, blank=True)
     notes = models.CharField(max_length=3000)
     status = models.CharField(max_length=25)
 
@@ -126,7 +126,7 @@ class ExerciseEntry(models.Model):
     exerciseID = models.IntegerField(primary_key=True)
     patientID = models.ForeignKey(
         Patient, null=True, blank=True, on_delete=models.SET_NULL)
-    date = models.DateTimeField(default=datetime.today, datetime=True)
+    date = models.DateTimeField(default=datetime.today, blank=True)
     duration = models.IntegerField
     weight = models.IntegerField
 
