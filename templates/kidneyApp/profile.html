@@ -3,7 +3,7 @@
 {% endblock %} {% block content %}
 <div class="row mt-3 pt-3">
   <div class="col-md-4">
-    <h1>Enter Personal Info:</h1>
+    <h1>Enter Personal Info:</h1> <br> <br>
     <!-- form will go here later-->
   </div>
   <div class="col-md-8">
@@ -11,22 +11,22 @@
       {% csrf_token %}
 
       <label for="fName">First Name:</label>
-      <input type="text" name="fName" id="fName" autofocus>
+      <input type="text" name="fName" id="fName" autofocus> <br>
 
       <label for="lName">Last Name:</label>
-      <input type="text" name="lName" id="lName">
+      <input type="text" name="lName" id="lName"> <br>
 
       <label for="phone">Phone Number:</label>
-      <input type="text" name="phone" id="phone">
+      <input type="text" name="phone" id="phone"> <br>
 
       <label for="email">Email:</label>
-      <input type="text" name="email" id="email">
+      <input type="text" name="email" id="email"> <br>
 
       <label for="address">Street Address:</label>
-      <input type="text" name="address" id="address">
+      <input type="text" name="address" id="address"> <br>
 
       <label for="city">City:</label>
-      <input type="text" name="city" id="city">
+      <input type="text" name="city" id="city"> <br>
 
       <label for="state">State:</label>
       <select name="state" id="state">
@@ -82,39 +82,39 @@
         <option value="WV">West Virginia</option>
         <option value="WI">Wisconsin</option>
         <option value="WY">Wyoming</option>
-    </select>
+    </select> <br>
 
     <label for="zipcode">ZipCode:</label>
-      <input type="text" name="zipcode" id="zipcode">
+      <input type="text" name="zipcode" id="zipcode"> <br> <br>
 
     <h6>Only for Patients:</h6>
 
       <label for="age">Age:</label>
-      <input type="number" name="age" id="age">
+      <input type="number" name="age" id="age"> <br>
 
       <label for="weight">Weight:</label>
-      <input type="number" name="weight" id="weight">
+      <input type="number" name="weight" id="weight"> <br>
 
       <label for="height">Height:</label>
-      <input type="number" name="height" id="height">
+      <input type="number" name="height" id="height"> <br><br>
 
-      <!-- <fieldset style="size: 0px;">
+      
+
+      <fieldset style="size: 0px">
         <legend>Morbidities</legend>
-        <label for="novice">-1</label>
-        <input name="type" id="novice" type="radio">
-        <br>
-        <label for="beg">1</label>
-        <input type="radio" name="type" id="beg">
-        <br>
-        <label for="med">2</label>
-        <input type="radio" name="type" id="med">
-        <br>
-        <label for="adv">3</label>
-        <input type="radio" name="type" id="adv">
-        <br>
-        <label for="exp">3+</label>
-        <input type="radio" name="type" id="exp">
-    </fieldset> -->
+      <input type="checkbox" id="blood" name="morbid" value="High Blood Pressure">
+      <label for="blood">High Blood Pressure</label> <br>
+
+      <label for="bloodDate">Date Aquired</label>
+      <input type="text" id="bloodDate"><br>
+
+      <input type="checkbox" id="diabetes" name="morbid" value="Diabetes">
+      <label for="diabetes">Diabetes</label> <br>
+
+      <label for="diabetesDate">Date Aquired</label>
+      <input type="text" id="diabetesDate">
+
+    </fieldset><br><br>
 
       <button type="submit">Create new Person</button>v
 
