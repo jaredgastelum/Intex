@@ -40,7 +40,13 @@ class LabVitals(models.Model):
     K = models.DecimalField(max_digits=5, decimal_places=2)
     Phos = models.DecimalField(max_digits=5, decimal_places=2)
     Na = models.DecimalField(max_digits=5, decimal_places=2)
+
+
     Creatinine = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+
+
+
+
     Albumin = models.DecimalField(max_digits=5, decimal_places=2)
     BloodSugar = models.IntegerField(default=0)
     BloodPressure = models.CharField(max_length=10)
@@ -70,7 +76,7 @@ class Food(models.Model):
 
 
 class FoodEntry(models.Model):
-    foodEntryID = models.IntegerField(primary_key=True)
+    foodEntryID = models.BigAutoField(primary_key=True)
     date = models.DateTimeField(default=datetime.today, blank=True)
     mealType = models.CharField(max_length=20)
     personID = models.ForeignKey(
@@ -95,7 +101,7 @@ class Serving(models.Model):
 
 
 class JournalEntry(models.Model):
-    entryID = models.IntegerField(primary_key=True)
+    entryID = models.BigAutoField(primary_key=True)
     personID = models.ForeignKey(
         Person, null=True, blank=True, on_delete=models.SET_NULL)
     date = models.DateTimeField(default=datetime.today, blank=True)
@@ -107,7 +113,7 @@ class JournalEntry(models.Model):
 
 
 class ExerciseEntry(models.Model):
-    exerciseID = models.IntegerField(primary_key=True)
+    exerciseID = models.BigAutoField(primary_key=True)
     personID = models.ForeignKey(
         Person, null=True, blank=True, on_delete=models.SET_NULL)
     date = models.DateTimeField(default=datetime.today, blank=True)
