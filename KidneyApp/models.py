@@ -16,8 +16,8 @@ class Person(models.Model):
     email = models.CharField(max_length=100)
     age = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
-    weight = models.DecimalField(max_digits=5, decimal_places=2, default=None)
-    #main_photo = models.ImageField(upload_to='photos', default=None)
+    weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    #main_photo = models.ImageField(upload_to='photos', null=True)
     morbidities = models.ManyToManyField('Morbidity')
 
     def __str__(self):

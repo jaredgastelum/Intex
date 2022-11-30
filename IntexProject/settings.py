@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'IntexProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kidney',
+        'NAME': 'kidney_new',
         'USER': 'postgres',
         'PASSWORD': getpass(),
         'HOST': 'localhost'
