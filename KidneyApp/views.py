@@ -3,7 +3,6 @@ from django.http import HttpRequest
 import urllib.parse
 import requests
 from .models import Person
-from .models import Patient
 from .models import LabVitals
 
 # Create your views here.
@@ -39,20 +38,21 @@ def storeProfilePageView(request):
         new_person.city = request.POST.get('city')
         new_person.state = request.POST.get('state')
         new_person.zip = request.POST.get('zipcode')
+        new_person.age = request.POST.get(('age'))
+        new_person.weight = request.POST.get(('weight'))
+        new_person.height = request.POST.get(('height'))
 
         new_person.save()
-
-        '''
-        new_patient = Patient()
+    
 
         new_patient.age = request.POST.get(int('age'))
         new_patient.weight = request.POST.get(int('weight'))
         new_patient.height = request.POST.get(int('height'))
 
         new_patient.save()
-        '''
 
-    return render(request, 'kidneyApp/made.html')
+
+    return render('kidneyApp/made.html')
 
 def storeVitalsPageView(request):
     if request.method == 'POST':
