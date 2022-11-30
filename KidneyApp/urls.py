@@ -12,6 +12,9 @@ from .views import APIPageView
 from .views import APISearchPageView
 from .views import APISelectPageView
 
+#test
+from .views import popupPageView
+
 urlpatterns = [
     path('', indexPageView, name='index'),
     path('about', aboutPageView, name='about'),
@@ -23,4 +26,5 @@ urlpatterns = [
     path("API", APIPageView, name="API"),
     path("APISearch/", APISearchPageView, name='APISearch'),
     path("APISelect/", APISelectPageView, name='APISelect'),
+    path("popup/", popupPageView, name="popup")
 ]
