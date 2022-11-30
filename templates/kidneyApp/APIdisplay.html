@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>        
+    <p>Food Item: {{ food.name }}</p>
+    <p>Food Amount: {{ food.amount }}</p>
+    {% for foods in food.all %}
+
+        <div>{{ foods.name }}: {{ foods.amount }}</div>
+
+    {% endfor %}
+    </div>
+</div>
+
+<div>
+    <a href="{% url 'API' %}">Search Other Item</a>
+</div>
+
+{% endblock %}  

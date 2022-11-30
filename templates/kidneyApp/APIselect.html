@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div>        
+    <p>Food Item: {{ food.name }}</p>
+    <p>Food Amount: {{ food.amount }}</p>
+    {% for foods in food.list %}
+        <br>
+        <div>
+            <p>Description: {{ foods.description }}</p>
+            <p>Additional Info: {{ foods.additional }}</p>
+        </div>
+        <br><br>
+        <form method="get" action="{% url 'APISelect' %}" name="formAPI">
+            <input type="text" name='number' id='number' value={{foods.number}} hidden>
+            <input type="text" name='name' id='name' value={{food.name}} hidden>
+            <input type="text" name='amount' id='amount' value={{food.amount}} hidden>
+    
+            <button type="submit">SELECT</button>
+        </form> 
+
+    {% endfor %}
+    </div>
+</div>
+
+<div>
+    <a href="{% url 'API' %}">Search Other Item</a>
+</div>
+
+{% endblock %}  
