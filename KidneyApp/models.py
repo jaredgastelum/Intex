@@ -40,6 +40,7 @@ class LabVitals(models.Model):
     K = models.DecimalField(max_digits=5, decimal_places=2)
     Phos = models.DecimalField(max_digits=5, decimal_places=2)
     Na = models.DecimalField(max_digits=5, decimal_places=2)
+
     Albumin = models.DecimalField(max_digits=5, decimal_places=2)
     BloodSugar = models.IntegerField(default=0)
     BloodPressure = models.CharField(max_length=10)

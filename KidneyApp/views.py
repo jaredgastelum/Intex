@@ -45,7 +45,14 @@ def storeProfilePageView(request):
         new_person.save()
     
 
-    return render(request, 'kidneyApp/made.html')
+        new_patient.age = request.POST.get(int('age'))
+        new_patient.weight = request.POST.get(int('weight'))
+        new_patient.height = request.POST.get(int('height'))
+
+        new_patient.save()
+
+
+    return render('kidneyApp/made.html')
 
 def storeVitalsPageView(request):
     if request.method == 'POST':
@@ -64,7 +71,7 @@ def storeVitalsPageView(request):
 
         new_vitals.save()
 
-    return render('kidneyApp/dashboard.html', print("Lab Vitals are now Updated"))
+    return render(request, 'kidneyApp/dashboard.html', print("Lab Vitals are now Updated"))
        
 
 
