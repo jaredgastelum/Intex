@@ -30,6 +30,9 @@ def labVitalsPageView(request):
 def popupPageView(request):
     return render(request, 'kidneyApp/popupForm.html')
 
+def loginPageView(request):
+    return render(request, 'kidneyApp/login.html')
+
 def storeProfilePageView(request):
     if request.method == 'POST':
         new_person = Person()

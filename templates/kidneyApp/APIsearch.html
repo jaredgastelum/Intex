@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<br><br><br><br><br><br><br><br><br>
 <div style="padding-top: 50px">
     
     <form method="get" action="{% url 'APISearch' %}" name="formAPI">
         <label for='name'>Enter the food name:</label>
-        <input type="text" name='name' id='name'>
+        <input type="text" name='name' id='name' autofocus>
         <br><br>
 
         <label for='amount'>Enter the amount:</label>
