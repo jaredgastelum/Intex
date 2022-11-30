@@ -24,6 +24,9 @@ def dashboardPageView(request):
 def profilePageView(request):
     return render(request, 'kidneyApp/profile.html')
 
+def popupPageView(request):
+    return render(request, 'kidneyApp/popupForm.html')
+
 def storeProfilePageView(request):
     if request.method == 'POST':
         new_person = Person()
