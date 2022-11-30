@@ -47,7 +47,6 @@ def storeProfilePageView(request):
 
         new_person.save()
 
-
     return render(request, 'kidneyApp/made.html')
 
 def storeVitalsPageView(request):
