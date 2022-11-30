@@ -45,11 +45,11 @@ def storeProfilePageView(request):
         new_person.save()
     
 
-        new_patient.age = request.POST.get(int('age'))
-        new_patient.weight = request.POST.get(int('weight'))
-        new_patient.height = request.POST.get(int('height'))
+        new_person.age = request.POST.get(int('age'))
+        new_person.weight = request.POST.get(int('weight'))
+        new_person.height = request.POST.get(int('height'))
 
-        new_patient.save()
+        new_person.save()
 
 
     return render('kidneyApp/made.html')
