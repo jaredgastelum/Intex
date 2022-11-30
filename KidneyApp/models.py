@@ -14,17 +14,10 @@ class Person(models.Model):
     zip = models.CharField(max_length=10)
     phone = models.CharField(max_length=14)
     email = models.CharField(max_length=100)
-
-    def __str__(self):
-        return (self.first_name + ' ' + self.last_name)
-
-
-class Patient(models.Model):
-    patientID = models.OneToOneField(Person, models.CASCADE, primary_key=True)
     age = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
-    weight = models.DecimalField(max_digits=3, decimal_places=2)
-    main_photo = models.ImageField(upload_to='photos')
+    weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    #main_photo = models.ImageField(upload_to='photos', null=True)
     morbidities = models.ManyToManyField('Morbidity')
 
     def __str__(self):
@@ -40,27 +33,18 @@ class Morbidity(models.Model):
         return (self.name)
 
 
-class MedicalProfessional(models.Model):
-    clinic = models.CharField(max_length=50)
-
-    def __str__(self):
-        return (self.first_name + ' ' + self.last_name)
-
-
 class LabVitals(models.Model):
     vitalid = models.BigAutoField(primary_key=True)
-    patientID = models.ForeignKey(
-        Patient, null=True, blank=True, on_delete=models.SET_NULL)
-    professionalID = models.ForeignKey(
-        MedicalProfessional, null=True, blank=True, on_delete=models.SET_NULL)
+    personID = models.ForeignKey(
+        Person, null=True, blank=True, on_delete=models.SET_NULL)
     K = models.DecimalField(max_digits=5, decimal_places=2)
     Phos = models.DecimalField(max_digits=5, decimal_places=2)
     Na = models.DecimalField(max_digits=5, decimal_places=2)
-    creatinine = models.DecimalField(max_digits=5, decimal_places=2)
+    Creatinine = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     Albumin = models.DecimalField(max_digits=5, decimal_places=2)
     BloodSugar = models.IntegerField(default=0)
     BloodPressure = models.CharField(max_length=10)
-    Weight = models.DecimalField(max_digits=3, decimal_places=2)
+    Weight = models.DecimalField(max_digits=5, decimal_places=2)
     Date = models.DateTimeField(default=datetime.today, blank=True)
 
     def __str__(self):
@@ -89,8 +73,8 @@ class FoodEntry(models.Model):
     foodEntryID = models.IntegerField(primary_key=True)
     date = models.DateTimeField(default=datetime.today, blank=True)
     mealType = models.CharField(max_length=20)
-    patientID = models.ForeignKey(
-        Patient, null=True, blank=True, on_delete=models.SET_NULL)
+    personID = models.ForeignKey(
+        Person, null=True, blank=True, on_delete=models.SET_NULL)
     foods = models.ManyToManyField(Food, through='Serving', blank=True)
 
     def __str__(self):
@@ -112,8 +96,8 @@ class Serving(models.Model):
 
 class JournalEntry(models.Model):
     entryID = models.IntegerField(primary_key=True)
-    patientID = models.ForeignKey(
-        Patient, null=True, blank=True, on_delete=models.SET_NULL)
+    personID = models.ForeignKey(
+        Person, null=True, blank=True, on_delete=models.SET_NULL)
     date = models.DateTimeField(default=datetime.today, blank=True)
     notes = models.CharField(max_length=3000)
     status = models.CharField(max_length=25)
@@ -124,8 +108,8 @@ class JournalEntry(models.Model):
 
 class ExerciseEntry(models.Model):
     exerciseID = models.IntegerField(primary_key=True)
-    patientID = models.ForeignKey(
-        Patient, null=True, blank=True, on_delete=models.SET_NULL)
+    personID = models.ForeignKey(
+        Person, null=True, blank=True, on_delete=models.SET_NULL)
     date = models.DateTimeField(default=datetime.today, blank=True)
     duration = models.IntegerField
     weight = models.IntegerField

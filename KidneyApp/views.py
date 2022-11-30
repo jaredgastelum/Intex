@@ -3,7 +3,6 @@ from django.http import HttpRequest
 import urllib.parse
 import requests
 from .models import Person
-from .models import Patient
 from .models import LabVitals
 
 # Create your views here.
@@ -24,6 +23,9 @@ def dashboardPageView(request):
 def profilePageView(request):
     return render(request, 'kidneyApp/profile.html')
 
+def labVitalsPageView(request):
+    return render(request, 'kidneyApp/labvitals.html')
+
 def popupPageView(request):
     return render(request, 'kidneyApp/popupForm.html')
 
@@ -39,37 +41,34 @@ def storeProfilePageView(request):
         new_person.city = request.POST.get('city')
         new_person.state = request.POST.get('state')
         new_person.zip = request.POST.get('zipcode')
+        new_person.age = request.POST.get(('age'))
+        new_person.weight = request.POST.get(('weight'))
+        new_person.height = request.POST.get(('height'))
 
         new_person.save()
 
-        new_patient = Patient()
 
-        new_patient.age = request.POST.get(int('age'))
-        new_patient.weight = request.POST.get(int('weight'))
-        new_patient.height = request.POST.get(int('height'))
-
-        new_patient.save()
-
-    return render('kidneyApp/made.html')
+    return render(request, 'kidneyApp/made.html')
 
 def storeVitalsPageView(request):
     if request.method == 'POST':
 
         new_vitals = LabVitals()
 
+        new_vitals.personID = request.POST.get('personid')
         new_vitals.K = request.POST.get('k')
         new_vitals.Phos = request.POST.get('phos')
         new_vitals.Na = request.POST.get('na')
-        new_vitals.creatinine = request.POST.get('creatinine')
+        new_vitals.Creatinine = request.POST.get('creatinine')
         new_vitals.Albumin = request.POST.get('albumin')
         new_vitals.BloodPressure = request.POST.get('blood')
         new_vitals.BloodSugar = request.POST.get('sugar')
         new_vitals.Date = request.POST.get('date')
-        new_vitals.Weight = request.POST.get(int('weight'))
+        new_vitals.Weight = request.POST.get(('weight'))
 
         new_vitals.save()
 
-    return render('kidneyApp/dashboard.html', print("Lab Vitals are now Updated"))
+    return render(request, 'kidneyApp/dashboard.html', print("Lab Vitals are now Updated"))
        
 
 

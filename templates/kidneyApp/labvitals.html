@@ -7,8 +7,9 @@
     <!-- form will go here later-->
   </div>
   <div class="col-md-8">
-    <form name="newProfile" method="POST" action="{% url 'storeProfile' %}">
+    <form name="newLabs" method="POST" action="{% url 'storevitals' %}">
       {% csrf_token %}
+      <input type="text" name="personID" id="personID" value=1 hidden>
 
       <label for="k">K:</label>
       <input type="text" name="k" id="k" autofocus> <br>
@@ -39,7 +40,7 @@
       
 
 
-      <button type="submit">Create new Person</button>v
+      <button type="submit">Store Vitals</button>
 
     </form>
     <!--chart will go here later-->
