@@ -26,6 +26,9 @@ def profilePageView(request):
 def labVitalsPageView(request):
     return render(request, 'kidneyApp/labvitals.html')
 
+def popupPageView(request):
+    return render(request, 'kidneyApp/popupForm.html')
+
 def storeProfilePageView(request):
     if request.method == 'POST':
         new_person = Person()
@@ -43,7 +46,6 @@ def storeProfilePageView(request):
         new_person.height = request.POST.get(('height'))
 
         new_person.save()
-
 
     return render(request, 'kidneyApp/made.html')
 
