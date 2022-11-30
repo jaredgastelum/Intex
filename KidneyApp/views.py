@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpRequest
+from django.shortcuts import render, redirect
+from django.http import HttpRequest, HttpResponse
 import urllib.parse
 import requests
 from .models import Person
@@ -206,3 +206,4 @@ def APISelectPageView(request) :
 
     # Returning a Specific HTML
     return render(request, 'kidneyApp/APIdisplay.html', context)
+
