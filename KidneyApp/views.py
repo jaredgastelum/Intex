@@ -52,7 +52,7 @@ def storeProfilePageView(request):
         new_patient.save()
         '''
 
-    return render('kidneyApp/made.html')
+    return render(request, 'kidneyApp/made.html')
 
 def storeVitalsPageView(request):
     if request.method == 'POST':
@@ -71,7 +71,7 @@ def storeVitalsPageView(request):
 
         new_vitals.save()
 
-    return render('kidneyApp/dashboard.html', print("Lab Vitals are now Updated"))
+    return render(request, 'kidneyApp/dashboard.html', print("Lab Vitals are now Updated"))
        
 
 
