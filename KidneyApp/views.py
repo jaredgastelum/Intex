@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from django.http import HttpRequest
+from django.shortcuts import render, redirect
+from django.http import HttpRequest, HttpResponse
 import urllib.parse
 import requests
 from .models import Person
 from .models import LabVitals
+from .models import Morbidity
 
 # Create your views here.
 
@@ -17,7 +18,45 @@ def aboutPageView(request):
 
 
 def dashboardPageView(request):
-    return render(request, 'kidneyApp/dashboard.html')
+    data = LabVitals.objects.filter(personID=1)
+
+    K_number = 0
+    Phos_number = 0
+    Na_number = 0
+    Creatinine_number = 0
+    Albumin_number = 0
+    BloodSugar_number = 0
+
+    iCount = 0
+
+    for datas in data:
+        K_number += int(datas.K)
+        Phos_number += int(datas.Phos)
+        Na_number += int(datas.Na)
+        Creatinine_number += int(datas.Creatinine)
+        Albumin_number += int(datas.Albumin)
+        BloodSugar_number += int(datas.BloodSugar)
+        
+        iCount += 1
+
+    K_total = K_number / iCount
+    Phos_total = Phos_number / iCount
+    Na_total = Na_number / iCount
+    Creatinine_total = Creatinine_number / iCount
+    Albumin_total = Albumin_number / iCount
+    BloodSugar_total = BloodSugar_number / iCount
+
+    context = {
+        'data': data,
+        'K_number' : K_total,
+        'Phos_number' : Phos_total,
+        'Na_number' : Na_total,
+        'Creatinine_number' : Creatinine_total,
+        'Albumin_number' : Albumin_total,
+        'BloodSugar_number' : BloodSugar_total,
+    }
+
+    return render(request, 'kidneyApp/dashboard.html', context)
 
 
 def profilePageView(request):
@@ -46,16 +85,23 @@ def storeProfilePageView(request):
         new_person.height = request.POST.get(('height'))
 
         new_person.save()
+        if (request.POST.get('HBP')):
+            new_Morbidity = Morbidity.objects.create(name='High Blood Pressure', datediagnosed=request.POST.get('bloodDate'))
+            new_person.morbidities.add(new_Morbidity)
 
+        if (request.POST.get('DIA')):
+            new_Morbidity = Morbidity.objects.create(name='Diabetes', datediagnosed=request.POST.get('diabetesDate'))
+            new_person.morbidities.add(new_Morbidity)
 
     return render(request, 'kidneyApp/made.html')
 
 def storeVitalsPageView(request):
     if request.method == 'POST':
+        person = Person.objects.get(personid=1)
 
         new_vitals = LabVitals()
 
-        new_vitals.personID = request.POST.get('personid')
+        new_vitals.personID = person
         new_vitals.K = request.POST.get('k')
         new_vitals.Phos = request.POST.get('phos')
         new_vitals.Na = request.POST.get('na')
@@ -81,7 +127,7 @@ url = main_api + urllib.parse.urlencode({'query': food})
 
 json_data = requests.get(url).json()
 
-print(json_data['foods'][0]['fdcId'])
+#print(json_data['foods'][0]['fdcId'])
 
 #new
 def APIPageView(request) :
@@ -160,3 +206,4 @@ def APISelectPageView(request) :
 
     # Returning a Specific HTML
     return render(request, 'kidneyApp/APIdisplay.html', context)
+

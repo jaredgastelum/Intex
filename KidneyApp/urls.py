@@ -26,5 +26,5 @@ urlpatterns = [
     path("API", APIPageView, name="API"),
     path("APISearch/", APISearchPageView, name='APISearch'),
     path("APISelect/", APISelectPageView, name='APISelect'),
-    path("popup/", popupPageView, name="popup")
+    path("popup/", popupPageView, name="popup"),
 ]
