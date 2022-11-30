@@ -6,6 +6,11 @@ from .views import profilePageView
 from .views import storeProfilePageView
 from .views import storeVitalsPageView
 
+#new 
+from .views import APIPageView
+from .views import APISearchPageView
+from .views import APISelectPageView
+
 urlpatterns = [
     path('', indexPageView, name='index'),
     path('about', aboutPageView, name='about'),
@@ -13,4 +18,7 @@ urlpatterns = [
     path('profile', profilePageView, name='profile'),
     path("storeprofile", storeProfilePageView, name="storeProfile"),
     path('storevitals', storeVitalsPageView, name='storevitals'),
+    path("API", APIPageView, name="API"),
+    path("APISearch/", APISearchPageView, name='APISearch'),
+    path("APISelect/", APISelectPageView, name='APISelect'),
 ]
