@@ -2,12 +2,12 @@
 {% load static %} {% block basetitle %} Profile 
 {% endblock %} {% block content %}
 <div class="row mt-3 pt-3">
-  <div class="col-md-4">
-    <h1>Enter Personal Info:</h1> <br> <br>
+  <div class="container-3">
+    <h1 style="text-align:center">Enter Personal Info:</h1> <br> <br>
     <!-- form will go here later-->
-  </div>
-  <div class="col-md-8">
-    <form name="newLabs" method="POST" action="{% url 'storevitals' %}">
+  </div> 
+  <div class="container-3" style = "text-align:left; padding-left:40%"> 
+    <form  name="newLabs" method="POST" action="{% url 'storevitals' %}"> 
       {% csrf_token %}
       <input type="text" name="personID" id="personID" value=1 hidden>
 
@@ -36,11 +36,11 @@
       <input type="number" name="weight" id="weight"> <br>
 
       <label for="date">Date:</label>
-      <input type="datetime-local" name="date" id="date"> <br>
+      <input type="datetime-local" name="date" id="date"> <br> <br>
       
 
 
-      <button type="submit">Store Vitals</button>
+      <button type="submit" style = "background-color:black; border-radius:5px; color:white">Store Vitals</button>
 
     </form>
     <!--chart will go here later-->
