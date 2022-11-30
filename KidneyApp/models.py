@@ -95,7 +95,7 @@ class Serving(models.Model):
 
 
 class JournalEntry(models.Model):
-    entryID = models.IntegerField(primary_key=True)
+    entryID = models.BigAutoField(primary_key=True)
     personID = models.ForeignKey(
         Person, null=True, blank=True, on_delete=models.SET_NULL)
     date = models.DateTimeField(default=datetime.today, blank=True)

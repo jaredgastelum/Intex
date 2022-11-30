@@ -4,6 +4,7 @@ import urllib.parse
 import requests
 from .models import Person
 from .models import LabVitals
+from .models import JournalEntry
 
 # Create your views here.
 
@@ -68,6 +69,21 @@ def storeVitalsPageView(request):
         new_vitals.save()
 
     return render(request, 'kidneyApp/dashboard.html', print("Lab Vitals are now Updated"))
+
+
+def journalPageView(request):
+    if request.method == 'POST':
+        new_journal = JournalEntry()
+
+        new_journal.notes = request.POST.get('journalentry')
+        new_journal.date = request.POST.get('date')
+        new_journal.status = request.POST.get('status')
+
+
+        new_journal.save()
+
+    return render(request, 'kidneyApp/dashboard.html', print("Journal Entry Created"))
+
        
 
 
