@@ -3,23 +3,28 @@
 {% block content %}
 <div>        
     <p>Food Item: {{ food.name }}</p>
-    <p>Food Amount: {{ food.amount }}</p>
+    <p>Nutrient Info is in amounts of 100 grams</p>
     {% for foods in food.list %}
         <br>
         <div>
-            <p>Description: {{ foods.description }}</p>
-            <p>Additional Info: {{ foods.additional }}</p>
+            <p>Name: {{ foods.description }}</p>
+            <p>Description Info: {{ foods.additional }}</p>
+            <p>Nutrient Info</p>
+            {% for nutrient in foods.nutrients %}
+                <p>{{ nutrient.name }}: {{ nutrient.amount }} {{ nutrient.unitName }}</p>
+            {% endfor %}
         </div>
         <br><br>
         <form method="get" action="{% url 'APISelect' %}" name="formAPI">
             <input type="text" name='number' id='number' value={{foods.number}} hidden>
-            <input type="text" name='name' id='name' value={{food.name}} hidden>
-            <input type="text" name='amount' id='amount' value={{food.amount}} hidden>
+            <input type="text" name='name' id='name' value={{ food.name }} hidden>
     
             <button type="submit">SELECT</button>
         </form> 
 
     {% endfor %}
+
+    
     </div>
 </div>
 

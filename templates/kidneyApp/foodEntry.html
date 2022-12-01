@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div style="padding-top: 50px">
+    
+    <form method="get" action="{% url 'FoodEntrySubmit' %}" name="formFoodEntry">
+        <label for='date'>Enter the Date:</label>
+        <input type="date" name="date" id="date">
+        <br><br>
+        <label for="meal">Choose Your Meal:</label>
+
+        <select name="meal" id="meal">
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="snack">Snack</option>
+        </select>
+        <!--
+        <label for='amount'>Pick:</label>
+        <input type="radio" name='amount' id='amount'>
+        <br><br>
+        -->
+        <button type="submit">Submit</button>
+    </form> 
+</div>
+
+{% endblock %}  
