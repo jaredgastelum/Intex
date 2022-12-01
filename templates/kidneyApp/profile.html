@@ -1,6 +1,9 @@
 {% extends 'base.html' %} 
-{% load static %} {% block basetitle %} Profile 
+{% load static %} {% block basetitle %} Sign Up 
 {% endblock %} {% block content %}
+
+<br><br><br><br><br>
+
 <div class="row mt-3 pt-3">
   <div class="col-md-4">
     <h1>Enter Personal Info:</h1> <br> <br>
@@ -87,7 +90,7 @@
     <label for="zipcode">ZipCode:</label>
       <input type="text" name="zipcode" id="zipcode"> <br> <br>
 
-    <h6>Only for Patients:</h6>
+  
 
       <label for="age">Age:</label>
       <input type="number" name="age" id="age"> <br>
@@ -97,6 +100,18 @@
 
       <label for="height">Height:</label>
       <input type="number" name="height" id="height"> <br><br>
+
+      <label for="">Username</label>
+        <input type="text" id="username" name="username" placeholder="Create a username (only letters and numbers)" Required>
+        <br>
+        
+        <label for="">Password</label>
+        <input type="password" id="pass1" name="pass1" placeholder="Create a Password" Required>
+        <br>
+
+        <label for="">Confirm Password</label>
+        <input type="password" id="pass2" name="pass2" placeholder="Confirm Your Password" Required>
+        <br><br><br>
 
       
 

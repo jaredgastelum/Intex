@@ -49,17 +49,33 @@
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
 
+      {% if user.is_authenticated %}
+
+
       <nav id="navbar" class="navbar">
         <ul>
+          <li><a class="nav-link scrollto" href="{% url 'about' %}">About</a></li>
           <li><a class="nav-link scrollto" href="{% url 'profile' %}">Profile</a></li>
           <li><a class="nav-link scrollto" href="{% url 'popup' %}">Popup Form</a></li>
           <li><a class="nav-link scrollto" href="{% url 'API' %}">API Page</a></li>
           <li><a class="nav-link scrollto" href="{% url 'labvitals' %}">Lab Vitals</a></li>
+          <li><a class="nav-link scrollto active" href="{% url 'signout' %}">Logout</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+
+      {% else %}
+
+      <nav id="navbar" class="navbar">
+        <ul>
           <li><a class="nav-link scrollto" href="{% url 'about' %}">About</a></li>
           <li><a class="nav-link scrollto active" href="{% url 'login' %}">Login/Sign Up</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
+
+      {% endif %}
 
     </div>
   </header><!-- End Header -->
@@ -528,6 +544,8 @@
       <div class="container">
         <div class="row">
 
+          {% if user.is_authenticated %}
+
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
@@ -536,10 +554,20 @@
               <li><a class="nav-link scrollto" href="{% url 'API' %}">API Page</a></li>
               <li><a class="nav-link scrollto" href="{% url 'labvitals' %}">Lab Vitals</a></li>
               <li><a class="nav-link scrollto" href="{% url 'about' %}">About</a></li>
-              <li><a class="nav-link scrollto active" href="{% url 'login' %}">Login</a></li>
+              <li><a class="nav-link scrollto active" href="{% url 'signout' %}">Logout</a></li>
             </ul>
           </div>
 
+          {% else %}
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a class="nav-link scrollto" href="{% url 'about' %}">About</a></li>
+              <li><a class="nav-link scrollto active" href="{% url 'login' %}">Login/Sign Up</a></li>
+            </ul>
+          </div>
+
+          {% endif %}
         </div>
       </div>
     </div>

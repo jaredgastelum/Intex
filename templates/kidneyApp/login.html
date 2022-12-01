@@ -1,11 +1,29 @@
 {% extends 'base.html' %} 
 {% load static %} {% block basetitle %} Login 
 {% endblock %} {% block content %}
-<div class="row mt-3 pt-3">
-  <div class="col-md-4">
-    <h1>This is the Login Page</h1>
-    <!-- form will go here later-->
-  </div>
+<br><br><br><br><br>
+
+
+<div class="content">
+  <h3>Sign In</h3>
+
+  <form action="/signin/" method='post'>
+    {% csrf_token %}
+        <label for="">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter Username" Required>
+        <br>
+        <label for="">Password</label>
+        <input type="password" id="pass1" name="pass1" placeholder="Enter Password" Required>
+        <br>
+    
+        <button type="submit">Sign In</button>
+    </form>
+
+  <p>
+    Dont have an account? Sign Up Today!
+  </p>
+  <a href="{% url 'profile' %}" class="about-btn">Sign Up!<i class="bx bx-chevron-right"></i></a>
+</div>
 
 
 {% endblock %}

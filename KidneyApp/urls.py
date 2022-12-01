@@ -17,6 +17,8 @@ from .views import APISelectPageView
 #test
 from .views import popupPageView
 
+from . import views
+
 urlpatterns = [
     path('', indexPageView, name='index'),
     path('about/', aboutPageView, name='about'),
@@ -31,4 +33,8 @@ urlpatterns = [
     path("popup/", popupPageView, name="popup"),
     path('journal', journalPageView, name='journal'),
     path('login', loginPageView, name='login'),
+        #new login
+    path('signup/', views.signup, name='signup'),
+    path('signin/', views.signin, name='signin'),
+    path('signout/', views.signout, name='signout'),
 ]

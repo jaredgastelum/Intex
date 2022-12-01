@@ -3,19 +3,34 @@
 {% endblock %} {% block content %}
 
   <!-- ======= Hero Section ======= -->
+
   <section id="hero">
+
+    {% if user.is_authenticated %}
+    <div class="hero-container" data-aos="fade-up">
+      <h1>Welcome {{ fName }} {{ lName }}</h1>
+      <h2>Keep track of your health</h2>
+      <a href="#about" class="btn-get-started scrollto"><i class="bx bx-chevrons-down"></i></a>
+    </div>
+
+    {% else%}
     <div class="hero-container" data-aos="fade-up">
       <h1>Welcome to Kidney Help</h1>
       <h2>Stay in control of your health</h2>
       <a href="#about" class="btn-get-started scrollto"><i class="bx bx-chevrons-down"></i></a>
     </div>
+    {% endif %}
+
+
   </section><!-- End Hero -->
 
  {% comment %} <main id="main">  {% endcomment %}
 
 
 
+{% if user.is_authenticated %}
 
+{% else %}
 <section id="about" class="about">
   <div class="container">
 
@@ -59,6 +74,7 @@
 
   </div>
 </section><!-- End About Section -->
+{% endif %}
 
 
  <!-- ======= Services Section ======= -->
@@ -108,6 +124,10 @@
   </div>
 </section><!-- End Services Section -->
 
+
+{% if user.is_authenticated %}
+
+{% else %}
     <!-- ======= Cta Section ======= -->
     <section id="cta" class="cta">
       <div class="container" data-aos="zoom-in">
@@ -120,5 +140,6 @@
 
       </div>
     </section><!-- End Cta Section -->
+  {% endif %}
 
 {% endblock %}
