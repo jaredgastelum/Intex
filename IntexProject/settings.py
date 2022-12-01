@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'KidneyApp.apps.KidneyappConfig'
+    'KidneyApp.apps.KidneyappConfig',
+    'login.apps.LoginConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'kidney_test',
         'USER': 'postgres',
-        'PASSWORD': 'NEWYORKUT1CAM1SS1ON',
+        'PASSWORD': getpass(),
         'HOST': 'localhost'
     }
 }
