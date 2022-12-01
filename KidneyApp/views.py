@@ -5,6 +5,7 @@ import requests
 from .models import Person
 from .models import LabVitals
 from .models import Morbidity
+from .models import Food, FoodEntry
 
 # Create your views here.
 
@@ -129,6 +130,21 @@ json_data = requests.get(url).json()
 
 #print(json_data['foods'][0]['fdcId'])
 
+def FoodEntryPageView(request) :
+    return render(request, 'kidneyApp/foodEntry.html')
+
+def FoodEntrySubmitPageView(request):
+
+    person = Person.objects.get(personid=1)
+
+    new_foodEntry = FoodEntry()
+    new_foodEntry.personID = person
+    new_foodEntry.date = request.POST.get('date')
+    new_foodEntry.mealType = request.POST.get('meal')
+
+    return render(request, 'kidneyApp/APISearch.html')
+
+
 #new
 def APIPageView(request) :
     return render(request, 'kidneyApp/APISearch.html')
@@ -136,7 +152,7 @@ def APIPageView(request) :
 def APISearchPageView(request) :
     # Variables from the Search
     sName = request.GET['name']
-    iAmount = request.GET['amount']
+    #iAmount = request.GET['amount']
 
     # Getting the ID of the specific food
     main_api = 'https://api.nal.usda.gov/fdc/v1/foods/search?api_key=hzFpuwTYK1oM4XS0SnGp0xJyNVQG7EI4Yq0ZK5dl&dataType=Survey%20%28FNDDS%29&'
@@ -149,11 +165,27 @@ def APISearchPageView(request) :
 
     newID = new['foods'][0]['fdcId']
 
-    data = {'name': sName.upper(), 'amount': iAmount, 'list': []}
+    data = {'name': sName.upper(), 'list': []}
 
-    for iCount in range(0,9):
+    for iCount in range(0,2):
+        newID = new['foods'][iCount]['fdcId']
+        
+        api2 = 'https://api.nal.usda.gov/fdc/v1/food/' + str(newID) + '?api_key=hzFpuwTYK1oM4XS0SnGp0xJyNVQG7EI4Yq0ZK5dl'
 
-        data['list'].append({'description': new['foods'][iCount]['description'], 'additional': new['foods'][iCount]['additionalDescriptions'], 'number': new['foods'][iCount]['fdcId']})
+        new2 = requests.get(api2).json()
+
+        print(newID)
+
+        #print({'name': new2['foodNutrients'][1]['nutrient']['name'], 'amount': str(new2['foodNutrients'][1]['amount']), 'unitName' : str(new2['foodNutrients'][1]['nutrient']['unitName'])})
+
+        data['list'].append({'description': new['foods'][iCount]['description'], 'additional': new['foods'][iCount]['additionalDescriptions'], 'number': new['foods'][iCount]['fdcId'], \
+            'nutrients' : [{'name': new2['foodNutrients'][1]['nutrient']['name'], 'amount': str(new2['foodNutrients'][1]['amount']), 'unitName' : str(new2['foodNutrients'][1]['nutrient']['unitName'])}, \
+                {'name': new2['foodNutrients'][3]['nutrient']['name'], 'amount': str(new2['foodNutrients'][3]['amount']), 'unitName' : str(new2['foodNutrients'][3]['nutrient']['unitName'])}, \
+                    {'name': new2['foodNutrients'][8]['nutrient']['name'], 'amount': str(new2['foodNutrients'][8]['amount']), 'unitName' : str(new2['foodNutrients'][8]['nutrient']['unitName'])}, \
+                        {'name': new2['foodNutrients'][13]['nutrient']['name'], 'amount': str(new2['foodNutrients'][13]['amount']), 'unitName' : str(new2['foodNutrients'][13]['nutrient']['unitName'])}, \
+                            {'name': new2['foodNutrients'][14]['nutrient']['name'], 'amount': str(new2['foodNutrients'][14]['amount']), 'unitName' : str(new2['foodNutrients'][14]['nutrient']['unitName'])}, \
+                                {'name': new2['foodNutrients'][15]['nutrient']['name'], 'amount': str(new2['foodNutrients'][15]['amount']), 'unitName' : str(new2['foodNutrients'][15]['nutrient']['unitName'])}, \
+                                    {'name': new2['foodNutrients'][66]['nutrient']['name'], 'amount': str(new2['foodNutrients'][66]['amount']), 'unitName' : str(new2['foodNutrients'][66]['nutrient']['unitName'])}]})
 
     
     # Sending collected data to html
@@ -167,7 +199,6 @@ def APISearchPageView(request) :
 def APISelectPageView(request) :
     # Variables from the Search
     sName = request.GET['name']
-    iAmount = request.GET['amount']
     newID = request.GET['number']
 
     # Get Nutrients from ID
@@ -175,29 +206,29 @@ def APISelectPageView(request) :
 
     new2 = requests.get(api2).json()
 
-    data = {'name': sName.upper(), 'amount': iAmount, 'all':[]}
+    data = {'name': sName, 'number': newID, 'amount': 1, 'all':[]}
 
     # The Nutrients we need adding them to the list in the data dictionary
     # Water
-    data['all'].append({'name': new2['foodNutrients'][1]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][1]['amount'] * float(iAmount)) + ' ' + str(new2['foodNutrients'][1]['nutrient']['unitName']))})
+    data['all'].append({'name': new2['foodNutrients'][1]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][1]['amount']) + ' ' + str(new2['foodNutrients'][1]['nutrient']['unitName']))})
 
     # Cholesterol
-    data['all'].append({'name': new2['foodNutrients'][66]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][66]['amount']  * float(iAmount)) + ' ' + str(new2['foodNutrients'][66]['nutrient']['unitName']))})
+    data['all'].append({'name': new2['foodNutrients'][66]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][66]['amount']) + ' ' + str(new2['foodNutrients'][66]['nutrient']['unitName']))})
 
     # Sodium, Na
-    data['all'].append({'name': new2['foodNutrients'][15]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][15]['amount']  * float(iAmount)) + ' ' + str(new2['foodNutrients'][15]['nutrient']['unitName']))})
+    data['all'].append({'name': new2['foodNutrients'][15]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][15]['amount']) + ' ' + str(new2['foodNutrients'][15]['nutrient']['unitName']))})
 
     # Phosphorus
-    data['all'].append({'name': new2['foodNutrients'][13]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][13]['amount']  * float(iAmount)) + ' ' + str(new2['foodNutrients'][13]['nutrient']['unitName']))})
+    data['all'].append({'name': new2['foodNutrients'][13]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][13]['amount']) + ' ' + str(new2['foodNutrients'][13]['nutrient']['unitName']))})
 
     # Sugars, total including NLEA
-    data['all'].append({'name': new2['foodNutrients'][8]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][8]['amount']  * float(iAmount)) + ' ' + str(new2['foodNutrients'][8]['nutrient']['unitName']))})
+    data['all'].append({'name': new2['foodNutrients'][8]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][8]['amount']) + ' ' + str(new2['foodNutrients'][8]['nutrient']['unitName']))})
 
     # Potassium, K
-    data['all'].append({'name': new2['foodNutrients'][14]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][14]['amount']  * float(iAmount)) + ' ' + str(new2['foodNutrients'][14]['nutrient']['unitName']))})
+    data['all'].append({'name': new2['foodNutrients'][14]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][14]['amount']) + ' ' + str(new2['foodNutrients'][14]['nutrient']['unitName']))})
 
     # Protein
-    data['all'].append({'name': new2['foodNutrients'][3]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][3]['amount']  * float(iAmount)) + ' ' + str(new2['foodNutrients'][3]['nutrient']['unitName']))})
+    data['all'].append({'name': new2['foodNutrients'][3]['nutrient']['name'], 'amount': (str(new2['foodNutrients'][3]['amount']) + ' ' + str(new2['foodNutrients'][3]['nutrient']['unitName']))})
 
     # Sending collected data to html
     context = {
@@ -205,4 +236,63 @@ def APISelectPageView(request) :
     }
 
     # Returning a Specific HTML
+    return render(request, 'kidneyApp/APIdisplay.html', context)
+
+def APITotalPageView(request) :
+    # Variables from the Search
+    sName = request.GET['name']
+    iNumber = request.GET['number']
+    iAmount = float(request.GET['amount'])
+    iWater = float(request.GET['water'])
+    iCholesterol = float(request.GET['cholesterol'])
+    iSodium = float(request.GET['sodium'])
+    iPhosphorus = float(request.GET['phosphorus'])
+    iSugars = float(request.GET['sugars'])
+    iPotassium = float(request.GET['potassium'])
+    iProtein = float(request.GET['protein'])
+
+    newWater = iAmount * iWater
+    newCholesterol = iAmount * iCholesterol
+    newSodium = iAmount * iSodium
+    newPhosphorus = iAmount * iPhosphorus
+    newSugars = iAmount * iSugars
+    newPotassium = iAmount * iPotassium
+    newProtein = iAmount * iProtein
+
+    new_food = Food()
+
+    new_food.name = sName
+    new_food.sodium = newSodium
+    new_food.protein = newProtein
+    new_food.k = newPotassium
+    new_food.phosphorus = newPhosphorus
+    new_food.sugar = newSugars
+    new_food.cholesterol = newCholesterol
+    new_food.water = newWater
+
+    food_Entry = FoodEntry().objects.get(foodEntryID=1)
+
+    food_Entry.foods.add(new_food)
+
+    new_vitals.foodID = person
+
+    api2 = 'https://api.nal.usda.gov/fdc/v1/food/' + str(iNumber) + '?api_key=hzFpuwTYK1oM4XS0SnGp0xJyNVQG7EI4Yq0ZK5dl'
+
+    nutrients = requests.get(api2).json()
+
+
+    data = {'name': sName, 'number': iNumber, 'amount' : iAmount, 'all':[]}
+
+    data['all'].append({'name': nutrients['foodNutrients'][1]['nutrient']['name'], 'amount': (str(newWater) + ' ' + str(nutrients['foodNutrients'][1]['nutrient']['unitName']))})
+    data['all'].append({'name': nutrients['foodNutrients'][66]['nutrient']['name'], 'amount': (str(newCholesterol) + ' ' + str(nutrients['foodNutrients'][66]['nutrient']['unitName']))})
+    data['all'].append({'name': nutrients['foodNutrients'][15]['nutrient']['name'], 'amount': (str(newSodium) + ' ' + str(nutrients['foodNutrients'][15]['nutrient']['unitName']))})
+    data['all'].append({'name': nutrients['foodNutrients'][13]['nutrient']['name'], 'amount': (str(newPhosphorus) + ' ' + str(nutrients['foodNutrients'][13]['nutrient']['unitName']))})
+    data['all'].append({'name': nutrients['foodNutrients'][8]['nutrient']['name'], 'amount': (str(newSugars) + ' ' + str(nutrients['foodNutrients'][8]['nutrient']['unitName']))})
+    data['all'].append({'name': nutrients['foodNutrients'][14]['nutrient']['name'], 'amount': (str(newPotassium) + ' ' + str(nutrients['foodNutrients'][14]['nutrient']['unitName']))})
+    data['all'].append({'name': nutrients['foodNutrients'][3]['nutrient']['name'], 'amount': (str(newProtein) + ' ' + str(nutrients['foodNutrients'][3]['nutrient']['unitName']))})
+
+    context = {
+        'food' : data
+    }
+
     return render(request, 'kidneyApp/APIdisplay.html', context)

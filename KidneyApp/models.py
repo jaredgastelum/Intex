@@ -60,23 +60,22 @@ class LabVitals(models.Model):
 class Food(models.Model):
     foodID = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=50)
+    
     sodium = models.DecimalField(max_digits=5, decimal_places=2)
     protein = models.DecimalField(max_digits=5, decimal_places=2)
     k = models.DecimalField(max_digits=5, decimal_places=2)
-    calcium = models.DecimalField(max_digits=5, decimal_places=2)
+    phosphorus = models.DecimalField(max_digits=5, decimal_places=2)
     sugar = models.IntegerField(default=0)
     cholesterol = models.DecimalField(max_digits=5, decimal_places=2)
-    calories = models.IntegerField(default=0)
-    carbohydrates = models.IntegerField(default=0)
-    fiber = models.DecimalField(max_digits=3, decimal_places=2)
-    fiber = models.DecimalField(max_digits=3, decimal_places=2)
+    water = models.IntegerField(default=0)
+    
 
     def __str__(self):
         return (self.name)
 
 
 class FoodEntry(models.Model):
-    foodEntryID = models.BigAutoField(primary_key=True)
+    foodentryid = models.BigAutoField(primary_key=True)
     date = models.DateTimeField(default=datetime.today, blank=True)
     mealType = models.CharField(max_length=20)
     personID = models.ForeignKey(
@@ -122,3 +121,19 @@ class ExerciseEntry(models.Model):
 
     def __str__(self):
         return (self.duration)
+
+class DailyTotal(models.Model):
+    dailytotalid = models.BigAutoField(primary_key=True)
+    date = models.DateField(default=date.today, blank=True)
+
+    sodium = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    protein = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    k = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    phosphorus = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    sugar = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    cholesterol = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    water = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+
+    def __str__(self):
+        return (str(self.date))
+
