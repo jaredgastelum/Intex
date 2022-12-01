@@ -1,10 +1,19 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 import urllib.parse
-import requests
+import requests 
 from .models import Person
 from .models import LabVitals
 from .models import Morbidity
+# login imports
+from django.shortcuts import  render, redirect
+from .forms import NewUserForm
+from django.contrib.auth import login
+from django.contrib import messages
+# NEW LOGIN IMPORTS
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -83,6 +92,7 @@ def storeProfilePageView(request):
         new_person.age = request.POST.get(('age'))
         new_person.weight = request.POST.get(('weight'))
         new_person.height = request.POST.get(('height'))
+        new_person.username = request.POST.get(('username'))
 
         new_person.save()
         if (request.POST.get('HBP')):
@@ -207,3 +217,72 @@ def APISelectPageView(request) :
     # Returning a Specific HTML
     return render(request, 'kidneyApp/APIdisplay.html', context)
 
+# login views
+def register_request(request):
+	if request.method == "POST":
+		form = NewUserForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			login(request, user)
+			messages.success(request, "Registration successful." )
+			return render(request = request, template_name="kidneyApp/success.html", context={"register_form": form} )
+		messages.error(request, "Unsuccessful registration. Invalid information.")
+	form = NewUserForm()
+	return render (request=request, template_name="kidneyApp/register.html", context={"register_form":form})
+
+def homepage(request):
+	return render(request=request, template_name='base.html')
+
+def successPageView(request):
+    return render (request, 'kidneyApp/success.html')
+
+#NEW LOGIN SCREEN
+def newLoginPageView(request):
+    return render(request, 'kidneyApp/newLogin.html')
+
+def signup(request):
+
+    if request.method == "POST":
+        username = request.POST['username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
+
+        myuser = User.objects.create_user(username, email, pass1)
+        myuser.first_name = fname
+        myuser.last_name = lname
+
+        myuser.save()
+
+        messages.success(request, "Your Account has been successfully created.")
+
+        return redirect('signin')
+
+
+    return render(request, "kidneyApp/signup.html")
+
+def signin(request):
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        pass1 = request.POST['pass1']
+
+        user = authenticate(username=username, password=pass1)
+
+        if user is not None:
+            login(request, user)
+            fname = user.first_name
+            return render(request, "kidneyApp/newLogin.html", {'fname':fname})
+
+        else:
+            messages.error(request, "Bad Credentials!")
+            return redirect('newLogin')
+
+    return render(request, "kidneyApp/signin.html")
+
+def signout(request):
+    logout(request)
+    messages.success(request, "Logged out successfully.")
+    return redirect('newLogin')

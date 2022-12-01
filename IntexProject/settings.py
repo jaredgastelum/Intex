@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'KidneyApp.apps.KidneyappConfig',
-    'login.apps.LoginConfig',
     'crispy_forms',
 ]
 
@@ -82,9 +81,9 @@ WSGI_APPLICATION = 'IntexProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'kidney_new',
+        'NAME': 'kidneytest1',
         'USER': 'postgres',
-        'PASSWORD': getpass(),
+        'PASSWORD': '1210',
         'HOST': 'localhost'
     }
 }

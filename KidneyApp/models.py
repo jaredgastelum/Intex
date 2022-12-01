@@ -19,6 +19,9 @@ class Person(models.Model):
     weight = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     #main_photo = models.ImageField(upload_to='photos', null=True)
     morbidities = models.ManyToManyField('Morbidity')
+    username = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
+
 
     def __str__(self):
         return (self.first_name + ' ' + self.last_name)
